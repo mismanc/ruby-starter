@@ -38,6 +38,7 @@
     <orderEntry type="library" scope="PROVIDED" name="activestorage (v6.1.4.1, RVM: ruby-3.0.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activesupport (v6.1.4.1, RVM: ruby-3.0.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="addressable (v2.8.0, RVM: ruby-3.0.3) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="annotate (v3.1.1, RVM: ruby-3.0.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bindex (v0.8.1, RVM: ruby-3.0.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bootsnap (v1.9.3, RVM: ruby-3.0.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.2.4, RVM: ruby-3.0.3) [gem]" level="application" />
@@ -110,6 +111,7 @@
     <option name="generators">
       <list>
         <option value="active_record:application_record" />
+        <option value="annotate:install" />
         <option value="application_record" />
         <option value="assets" />
         <option value="benchmark" />
@@ -140,6 +142,7 @@
     <option name="myGenerators">
       <list>
         <option value="active_record:application_record" />
+        <option value="annotate:install" />
         <option value="application_record" />
         <option value="assets" />
         <option value="benchmark" />
@@ -468,38 +471,6 @@
           <RakeTaskImpl description="" fullCommand="tmp/cache/assets" id="tmp/cache/assets" />
           <RakeTaskImpl description="" fullCommand="tmp/pids" id="tmp/pids" />
           <RakeTaskImpl description="" fullCommand="tmp/sockets" id="tmp/sockets" />
-          <RakeTaskImpl id="webdrivers">
-            <subtasks>
-              <RakeTaskImpl id="chromedriver">
-                <subtasks>
-                  <RakeTaskImpl description="" fullCommand="webdrivers:chromedriver:remove" id="remove" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:chromedriver:update" id="update" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:chromedriver:version" id="version" />
-                </subtasks>
-              </RakeTaskImpl>
-              <RakeTaskImpl id="edgedriver">
-                <subtasks>
-                  <RakeTaskImpl description="" fullCommand="webdrivers:edgedriver:remove" id="remove" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:edgedriver:update" id="update" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:edgedriver:version" id="version" />
-                </subtasks>
-              </RakeTaskImpl>
-              <RakeTaskImpl id="geckodriver">
-                <subtasks>
-                  <RakeTaskImpl description="" fullCommand="webdrivers:geckodriver:remove" id="remove" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:geckodriver:update" id="update" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:geckodriver:version" id="version" />
-                </subtasks>
-              </RakeTaskImpl>
-              <RakeTaskImpl id="iedriver">
-                <subtasks>
-                  <RakeTaskImpl description="" fullCommand="webdrivers:iedriver:remove" id="remove" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:iedriver:update" id="update" />
-                  <RakeTaskImpl description="" fullCommand="webdrivers:iedriver:version" id="version" />
-                </subtasks>
-              </RakeTaskImpl>
-            </subtasks>
-          </RakeTaskImpl>
         </subtasks>
       </RakeTaskImpl>
     </option>
