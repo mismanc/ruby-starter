@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2021_12_12_200028) do
 
   create_table "questions", id: :string, force: :cascade do |t|
     t.string "title"
-    t.integer "type", default: 0
+    t.string "type", default: "text"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "survey_id"

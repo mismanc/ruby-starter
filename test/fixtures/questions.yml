@@ -4,7 +4,7 @@
 #
 #  id         :string           not null, primary key
 #  title      :string
-#  type       :integer          default("text")
+#  type       :string           default("text")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  survey_id  :string

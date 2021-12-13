@@ -22,13 +22,11 @@ class SurveysController < ApplicationController
   # POST /surveys or /surveys.json
   def create
     @survey = Survey.new(survey_params)
-    puts @survey
-    puts @survey.__id__
-    puts "@survey.id"
     respond_to do |format|
       if @survey.save
-        format.html { redirect_to @survey, notice: "Survey was successfully created." }
-        format.json { render :show, status: :created, location: @survey }
+        render :json => @survey
+        #format.html { redirect_to @survey, notice: "Survey was successfully created." }
+        #format.json { render :show, status: :created, location: @survey }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @survey.errors, status: :unprocessable_entity }

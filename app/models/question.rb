@@ -4,7 +4,7 @@
 #
 #  id         :string           not null, primary key
 #  title      :string
-#  type       :integer          default("text")
+#  type       :string           default("text")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  survey_id  :string
@@ -14,7 +14,8 @@
 #  index_questions_on_survey_id  (survey_id)
 #
 class Question < GeneralModel
-  enum type: {text:0, choice:1}
+  self.inheritance_column = :_sti_disabled
+  enum type: {text:'text', choice:'choice'}
   belongs_to :survey
   has_many :options
 end
