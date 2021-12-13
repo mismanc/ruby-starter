@@ -14,6 +14,10 @@ class SurveysController < ApplicationController
   end
 
   def create_feedback
+    if params[:question_id].nil?
+      render json: { error: 'Question field is required ' }, status: 423
+      return
+    end
     @survey = Survey.find(params[:id].to_s)
     @feedback = Feedback.new(:survey => @survey)
     if @feedback.save
