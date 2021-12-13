@@ -1,4 +1,5 @@
 class SurveysController < ApplicationController
+  protect_from_forgery except: :create_feedback
   before_action :set_survey, only: %i[ show edit update destroy ]
 
   # GET /surveys or /surveys.json
@@ -8,62 +9,37 @@ class SurveysController < ApplicationController
 
   # GET /surveys/1 or /surveys/1.json
   def show
+    @survey = Survey.find(params[:id].to_s)
+    render :json => @survey.to_json(:except => [:created_at, :updated_at], :include => { :questions => { :include => { :options => { :except => [:created_at, :updated_at, :question_id] } }, :except => [:created_at, :updated_at, :survey_id] } })
   end
 
-  # GET /surveys/new
-  def new
-    @survey = Survey.new
-  end
-
-  # GET /surveys/1/edit
-  def edit
-  end
-
-  # POST /surveys or /surveys.json
-  def create
-    @survey = Survey.new(survey_params)
-    respond_to do |format|
-      if @survey.save
-        render :json => @survey
-        #format.html { redirect_to @survey, notice: "Survey was successfully created." }
-        #format.json { render :show, status: :created, location: @survey }
+  def create_feedback
+    @survey = Survey.find(params[:id].to_s)
+    @feedback = Feedback.new(:survey => @survey)
+    if @feedback.save
+      @question = Question.find(params[:question_id])
+      if @question.text? and params[:body].nil?
+        render json: { error: 'Body text required ' }, status: 423
+      elsif @question.choice? and params[:option_id].nil?
+        render json: { error: 'Option required ' }, status: 423
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @survey.errors, status: :unprocessable_entity }
+        @response = Response.create({ feedback: @feedback, option_id: params[:option_id], body: params[:body], question: @question  })
+        render :json => @response
       end
-    end
-  end
-
-  # PATCH/PUT /surveys/1 or /surveys/1.json
-  def update
-    respond_to do |format|
-      if @survey.update(survey_params)
-        format.html { redirect_to @survey, notice: "Survey was successfully updated." }
-        format.json { render :show, status: :ok, location: @survey }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @survey.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /surveys/1 or /surveys/1.json
-  def destroy
-    @survey.destroy
-    respond_to do |format|
-      format.html { redirect_to surveys_url, notice: "Survey was successfully destroyed." }
-      format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_survey
-      @survey = Survey.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def survey_params
-      params.require(:survey).permit( :name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_survey
+    @survey = Survey.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'No survey found by this: ' + params[:id].to_s }
+  end
+
+  # Only allow a list of trusted parameters through.
+  def response_params
+    params.permit(:question_id, :option_id, :id, :body)
+  end
 end
